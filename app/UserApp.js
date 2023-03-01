@@ -19,7 +19,7 @@ module.exports = class {
     }
 
     async getTokenByUserEmailAndPassword(email, password) {
-        const user = await userModel.find({
+        const user = await userModel.findOne({
             email: email
         });
 
@@ -31,16 +31,16 @@ module.exports = class {
             return false;
         }
 
-        let tokenPayLoad = utilsFunctions.createUserTokenPayLoad(user._id, Date.now() + (process.env.TOKEN_LIFE || 3600000));
+        let tokenPayLoad = utilsFunctions.createUserTokenPayLoad(user._id, Date.now() + (+process.env.TOKEN_LIFE || 3600000));
 
         const token = jwt.sign(tokenPayLoad, process.env.SECRET);
 
         let refreshToken = uuid.v4();
 
-        await userModel.updateOne({_id: user._id},{
-            $push:{
-                refreshToken:{
-                    token:refreshToken
+        await userModel.updateOne({_id: user._id}, {
+            $push: {
+                refreshToken: {
+                    token: refreshToken
                 }
             }
         });

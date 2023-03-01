@@ -16,4 +16,13 @@ Router.post('/', wrapMiddleware(userValidator.create), async (req, res) => {
     }
 });
 
+Router.post('/login', wrapMiddleware(userValidator.login), async (req, res) => {
+    try {
+        let result = await userApp.getTokenByUserEmailAndPassword(req.body.email, req.body.password);
+        baseResponse(res, true, result);
+    } catch (e) {
+        console.log(e);
+        baseResponse(res, false, 'user name and password match.', resultCode.NotMatch, 401);
+    }
+});
 module.exports = Router;

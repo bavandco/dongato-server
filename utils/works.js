@@ -6,4 +6,5 @@ module.exports.resultCode = {
     Duplicate: 'Duplicate',
     Validation: 'Validation',
     Ok: 'Ok',
+    NotMatch: 'NotMatch',
 };
