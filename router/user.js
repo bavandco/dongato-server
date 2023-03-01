@@ -3,8 +3,8 @@ const wrapMiddleware = require('../middlewares/wrapMidlleware');
 const userValidator = require('../middlewares/validators/userValidator')
 
 
-Router.get('/', (req, res) => {
-    res.send('run');
+Router.post('/', wrapMiddleware(userValidator.create), (req, res) => {
+
 });
 
 module.exports = Router;
