@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const {resultCode} = require('./works');
 
 exports.cryptPassword = function (password) {
     return new Promise((resolve, reject) => {
@@ -24,3 +25,11 @@ exports.comparePassword = function (plainPass, hashword) {
     })
 
 };
+
+exports.baseResponse = function (res, status, data, resCode = resultCode.Ok, code = 200) {
+    res.status(code).send({
+        status,
+        data,
+        resultStatus: resCode
+    });
+}
