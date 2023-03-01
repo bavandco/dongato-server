@@ -1,7 +1,11 @@
 const utilsWorks = require('./utils/works');
 const express = require('express');
+const rootRouter = require('./router/root');
 
 const app = express();
+
+// add routes
+app.use('/', rootRouter);
 
 
 app.listen(process.env.PORT || 3000, process.env.HOST || 'localhost', () => {
