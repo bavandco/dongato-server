@@ -7,4 +7,6 @@ module.exports.resultCode = {
     Validation: 'Validation',
     Ok: 'Ok',
     NotMatch: 'NotMatch',
+    ServerError: 'ServerError',
+    Invalid: 'Invalid'
 };

@@ -37,9 +37,9 @@ module.exports = class {
 
         let refreshToken = uuid.v4();
 
-        await userModel.updateOne({_id: user._id}, {
+        await userModel.updateOne({email}, {
             $push: {
-                refreshToken: {
+                refreshTokens: {
                     token: refreshToken
                 }
             }
