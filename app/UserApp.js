@@ -49,4 +49,27 @@ module.exports = class {
             refreshToken
         }
     }
+
+    async getTokenByRefreshToken(email, refreshToken) {
+        let user = await userModel.findOne({
+            email
+        });
+
+        if (!user) {
+            return false;
+        }
+
+        let flag = false;
+        user.refreshTokens.forEach((val) => {
+            if (val.token == refreshToken) {
+                flag = true;
+            }
+        });
+
+        if (!flag) {
+            return false;
+        }
+        let tokenPayLoad = utilsFunctions.createUserTokenPayLoad(user._id, Date.now() + (+process.env.TOKEN_LIFE || 3600000));
+        return jwt.sign(tokenPayLoad, process.env.SECRET);
+    }
 }
