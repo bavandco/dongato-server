@@ -33,3 +33,10 @@ exports.baseResponse = function (res, status, data, resCode = resultCode.Ok, cod
         resultStatus: resCode
     });
 }
+
+exports.createUserTokenPayLoad = function (id, exp) {
+    return {
+        id,
+        exp
+    };
+}
