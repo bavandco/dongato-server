@@ -4,6 +4,8 @@ const userValidator = require('../middlewares/validators/userValidator')
 const UserApp = require('../app/UserApp');
 const {baseResponse} = require('../utils/functions');
 const {resultCode} = require('../utils/works');
+const verifyTokenMiddleware = require('../middlewares/verifyTokenMiddleware');
+const _ = require('lodash');
 
 const userApp = new UserApp();
 
@@ -41,5 +43,17 @@ Router.post('/token', wrapMiddleware(userValidator.getTokenByRefreshToken), asyn
         console.log(e);
         baseResponse(res, false, 'server error.', resultCode.ServerError, 500);
     }
+});
+
+
+Router.get('/me', verifyTokenMiddleware, async (req, res) => {
+    let user = await userApp.getMe(req.body.token.id);
+    if (!user) {
+        return baseResponse(res, false, 'user not founded.', resultCode.NotFounded, 404);
+    }
+
+    return baseResponse(res, true, _.pickBy(user, (value, key) => {
+        return key !== 'password' && key !== 'refreshTokens' && key !== '_v';
+    }));
 });
 module.exports = Router;

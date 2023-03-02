@@ -10,4 +10,5 @@ module.exports.resultCode = {
     ServerError: 'ServerError',
     Invalid: 'Invalid',
     NotAuthorized: 'NotAuthorized',
+    NotFounded: 'NotFounded'
 };

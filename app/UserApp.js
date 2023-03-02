@@ -81,4 +81,19 @@ module.exports = class {
             return false;
         }
     }
+
+    async getMe(userID) {
+        try {
+            let user = await userModel.findById(userID);
+
+            if (!user) {
+                return false;
+            }
+
+            return user.toObject();
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
 }
