@@ -8,5 +8,6 @@ module.exports.resultCode = {
     Ok: 'Ok',
     NotMatch: 'NotMatch',
     ServerError: 'ServerError',
-    Invalid: 'Invalid'
+    Invalid: 'Invalid',
+    NotAuthorized: 'NotAuthorized',
 };
