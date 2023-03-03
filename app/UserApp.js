@@ -2,7 +2,6 @@ const userModel = require('../db/models/User');
 const utilsFunctions = require('../utils/functions');
 const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
-const {raw} = require("express");
 
 module.exports = class {
     async createUser(email, password, name) {
