@@ -7,7 +7,7 @@ module.exports = class {
     async createUser(email, password, name) {
         password = await utilsFunctions.cryptPassword(password);
         const id = uuid.v4();
-        const result = new userModel({
+        let result = new userModel({
             _id: id,
             email,
             password,
@@ -15,6 +15,21 @@ module.exports = class {
             name
         });
         await result.save();
+        result = result.toObject();
+        let tokenPayLoad = utilsFunctions.createUserTokenPayLoad(id, Date.now() + (+process.env.TOKEN_LIFE || 3600000));
+        const token = jwt.sign(tokenPayLoad, process.env.SECRET);
+
+        let refreshToken = uuid.v4();
+
+        await userModel.updateOne({email}, {
+            $push: {
+                refreshTokens: {
+                    token: refreshToken
+                }
+            }
+        });
+        result.refreshToken = refreshToken;
+        result.token = token;
         return result;
     }
 
