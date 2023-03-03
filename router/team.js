@@ -7,4 +7,8 @@ const {resultCode} = require('../utils/works');
 const verifyTokenMiddleware = require('../middlewares/verifyTokenMiddleware');
 const _ = require('lodash');
 
+Router.get('/', (req, res) => {
+    res.send('Team');
+})
+
 module.exports = Router;
