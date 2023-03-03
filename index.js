@@ -4,11 +4,12 @@ const rootRouter = require('./router/root');
 const userRouter = require('./router/user');
 const mongoose = require('mongoose');
 const teamRouter = require('./router/team');
-
+const cors = require('cors')
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/dongato')
     .then(() => {
         const app = express();
 
+        app.use(cors())
         app.use(express.json());
 
         // add routes
