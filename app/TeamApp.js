@@ -20,7 +20,7 @@ module.exports = class {
             });
 
             await team.save();
-            return team;
+            return team.toObject();
         } catch (e) {
             console.log(e);
             return false;
