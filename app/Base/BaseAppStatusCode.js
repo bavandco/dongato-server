@@ -1,4 +1,5 @@
 module.exports = {
     NotFounded: 'NotFounded',
-    Unknown: 'Unknown'
+    Unknown: 'Unknown',
+    Success: 'Success',
 }
