@@ -58,4 +58,18 @@ module.exports = class {
         }
     }
 
+    async getTeamByID(teamID) {
+        try {
+            let team = Team.findOne({
+                teamId: teamID
+            });
+            if (!team) {
+                return new BaseAppResult(false, BaseAppStatusCode.NotFounded);
+            }
+            return team.toObject();
+        } catch (e) {
+            return new BaseAppResult(false, BaseAppStatusCode.Unknown);
+        }
+    }
+
 }
