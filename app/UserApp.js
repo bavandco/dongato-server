@@ -46,7 +46,7 @@ module.exports = class {
             return false;
         }
 
-        let tokenPayLoad = utilsFunctions.createUserTokenPayLoad(user._id, Date.now() + (+process.env.TOKEN_LIFE || 3600000));
+        let tokenPayLoad = utilsFunctions.createUserTokenPayLoad(user._id, parseInt((Date.now() / 1000)) + (+process.env.TOKEN_LIFE || 3600));
 
         const token = jwt.sign(tokenPayLoad, process.env.SECRET);
 

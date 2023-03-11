@@ -8,7 +8,7 @@ module.exports = function (schema) {
             baseResponse(
                 res,
                 false,
-                result.error,
+                result.error.details,
                 resultCode.Validation,
                 400
             );

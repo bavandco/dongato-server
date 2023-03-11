@@ -9,7 +9,7 @@ const _ = require('lodash');
 const {teamApp} = require('../instances/app');
 
 
-Router.post('/', verifyTokenMiddleware, wrapMiddleware(teamMiddleware.create), async (req, res) => {
+Router.post('/', wrapMiddleware(teamMiddleware.create),verifyTokenMiddleware, async (req, res) => {
     try {
         let result = await teamApp.createTeam(req.body.token.id, req.body.name);
         if (!result) {
