@@ -32,7 +32,6 @@ module.exports = class {
 
     async addUserToTeam(userEmail, TeamID) {
         try {
-            console.log(userEmail)
             // check for user exists
             let user = await User.findOne({
                 email: userEmail

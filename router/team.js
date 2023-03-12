@@ -6,7 +6,7 @@ const verifyTokenMiddleware = require('../middlewares/verifyTokenMiddleware');
 const teamValidator = require('../middlewares/validators/teamValidator');
 const _ = require('lodash');
 const {teamApp} = require('../instances/app');
-const canAddMember = require('../middlewares/canAddMember');
+const IsAdminFromParametr = require('../middlewares/IsAdminFromParametr');
 const BaseAppStatusCode = require('../app/Base/BaseAppStatusCode');
 
 Router.post('/', wrapMiddleware(teamValidator.create), verifyTokenMiddleware, async (req, res) => {
@@ -23,7 +23,7 @@ Router.post('/', wrapMiddleware(teamValidator.create), verifyTokenMiddleware, as
 })
 
 
-Router.post('/:tid/addMember', wrapMiddleware(teamValidator.addMember), verifyTokenMiddleware, canAddMember, async (req, res) => {
+Router.post('/:tid/addMember', wrapMiddleware(teamValidator.addMember), verifyTokenMiddleware, IsAdminFromParametr, async (req, res) => {
     const result = await teamApp.addUserToTeam(req.body.userEmail, req.params.tid);
 
     if (!result.status) {
