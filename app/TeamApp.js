@@ -32,12 +32,37 @@ module.exports = class {
 
     async addUserToTeam(userEmail, TeamID) {
         try {
+
+            // check for user exists
             let user = await User.findById({
                 email: userEmail
             });
             if (!user) {
                 return new BaseAppResult(false, BaseAppStatusCode.NotFounded);
             }
+
+
+            // get team for user not added before.
+            let team = await Team.findOne({
+                teamId: TeamID
+            });
+
+            if (!team) {
+                new BaseAppResult(false, BaseAppStatusCode)
+            }
+
+            let flag = false;
+
+            team.members.forEach(val => {
+                if (val.user === user._id) {
+                    flag = true;
+                }
+            });
+
+            if (flag)
+                return new BaseAppResult(false, BaseAppStatusCode.Duplicate);
+
+            // update members.
             let result = await Team.updateOne({
                 teamId: TeamID
             }, {
