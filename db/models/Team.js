@@ -9,7 +9,8 @@ const teamSchema = new Schema({
     },
     teamID: {
         type: String,
-        unique: true
+        unique: true,
+        index: true
     },
     members: {
         type: [

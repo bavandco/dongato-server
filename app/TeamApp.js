@@ -32,9 +32,9 @@ module.exports = class {
 
     async addUserToTeam(userEmail, TeamID) {
         try {
-
+            console.log(userEmail)
             // check for user exists
-            let user = await User.findById({
+            let user = await User.findOne({
                 email: userEmail
             });
             if (!user) {
@@ -44,7 +44,7 @@ module.exports = class {
 
             // get team for user not added before.
             let team = await Team.findOne({
-                teamId: TeamID
+                teamID: TeamID
             });
 
             if (!team) {
@@ -64,7 +64,7 @@ module.exports = class {
 
             // update members.
             let result = await Team.updateOne({
-                teamId: TeamID
+                teamID: TeamID
             }, {
                 $push: {
                     members: {
@@ -85,13 +85,13 @@ module.exports = class {
 
     async getTeamByID(teamID) {
         try {
-            let team = Team.findOne({
-                teamId: teamID
+            let team = await Team.findOne({
+                teamID: teamID
             });
             if (!team) {
                 return new BaseAppResult(false, BaseAppStatusCode.NotFounded);
             }
-            return team.toObject();
+            return new BaseAppResult(true, BaseAppStatusCode.Success, team.toObject());
         } catch (e) {
             return new BaseAppResult(false, BaseAppStatusCode.Unknown);
         }
