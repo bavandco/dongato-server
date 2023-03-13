@@ -92,6 +92,34 @@ module.exports = class {
             }
             return new BaseAppResult(true, BaseAppStatusCode.Success, team.toObject());
         } catch (e) {
+            console.log(e)
+            return new BaseAppResult(false, BaseAppStatusCode.Unknown);
+        }
+    }
+
+    async getUserTeams(userEMail) {
+        try {
+            const user = await User.find({
+                email: userEMail
+            });
+            if (!user) {
+                return new BaseAppResult(
+                    false,
+                    BaseAppStatusCode.NotFounded
+                );
+            }
+
+            const teams = await Team.find({
+                "members.user": user._id
+            });
+
+            for (let i = 0; i < teams.length; i++) {
+                teams[i] = teams[i].toObject();
+            }
+
+            return teams;
+        } catch (e) {
+            console.log(e)
             return new BaseAppResult(false, BaseAppStatusCode.Unknown);
         }
     }
