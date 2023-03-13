@@ -36,7 +36,11 @@ const teamSchema = new Schema({
     profile: {
         type: String,
         default: ''
-    }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 module.exports = model("Team", teamSchema);

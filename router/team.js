@@ -42,4 +42,15 @@ Router.post('/:tid/addMember', wrapMiddleware(teamValidator.addMember), verifyTo
 });
 
 
+Router.get('/', verifyTokenMiddleware, async (req, res) => {
+    const result = await teamApp.getUserTeamsWithoutPopulate(req.body.token.id);
+
+    if (!result.status) {
+        return baseResponse(res, false, {}, resultCode.ServerError, 500);
+    }
+
+    return baseResponse(res, true, result.data);
+});
+
+
 module.exports = Router;

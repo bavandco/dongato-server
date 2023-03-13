@@ -97,27 +97,21 @@ module.exports = class {
         }
     }
 
-    async getUserTeams(userEMail) {
+    async getUserTeamsWithoutPopulate(userID) {
         try {
-            const user = await User.find({
-                email: userEMail
-            });
-            if (!user) {
-                return new BaseAppResult(
-                    false,
-                    BaseAppStatusCode.NotFounded
-                );
-            }
-
             const teams = await Team.find({
-                "members.user": user._id
+                "members.user": userID
             });
 
             for (let i = 0; i < teams.length; i++) {
                 teams[i] = teams[i].toObject();
             }
 
-            return teams;
+            return new BaseAppResult(
+                true,
+                BaseAppStatusCode.Success,
+                teams
+            );
         } catch (e) {
             console.log(e)
             return new BaseAppResult(false, BaseAppStatusCode.Unknown);
