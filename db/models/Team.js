@@ -32,6 +32,10 @@ const teamSchema = new Schema({
         type: String,
         ref: "User",
         required: true
+    },
+    profile: {
+        type: String,
+        default: ''
     }
 });
 

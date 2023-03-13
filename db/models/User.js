@@ -31,6 +31,10 @@ const userSchema = new Schema({
         }],
         default: []
     },
+    profile: {
+        type: String,
+        default: ''
+    }
 });
 
 module.exports = model("User", userSchema);
