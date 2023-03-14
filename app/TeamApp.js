@@ -118,4 +118,37 @@ module.exports = class {
         }
     }
 
+
+    async setUserToAdmin(userEmail, teamID) {
+        try {
+            const user = await User.findOne({
+                email: userEmail
+            });
+
+            if (!user) {
+                return new BaseAppResult(
+                    false,
+                    BaseAppStatusCode.NotFounded
+                );
+            }
+
+
+            const result = await Team.updateOne({
+                teamID: teamID,
+                'members.user': user._id
+            }, {
+                $set: {
+                    'members.$.rule': 'admin'
+                }
+            })
+
+            return result.matchedCount === 1 ?
+                new BaseAppResult(true, BaseAppStatusCode.Success) :
+                new BaseAppResult(false, BaseAppStatusCode)
+        } catch (e) {
+            console.log(e)
+            return new BaseAppResult(false, BaseAppStatusCode.Unknown);
+        }
+    }
+
 }
