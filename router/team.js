@@ -8,7 +8,6 @@ const _ = require('lodash');
 const {teamApp} = require('../instances/app');
 const IsAdminFromParametr = require('../middlewares/IsAdminFromParametr');
 const BaseAppStatusCode = require('../app/Base/BaseAppStatusCode');
-const {verifyToken} = require("../app/UserApp");
 
 Router.post('/', wrapMiddleware(teamValidator.create), verifyTokenMiddleware, async (req, res) => {
     try {
@@ -53,7 +52,8 @@ Router.get('/', verifyTokenMiddleware, async (req, res) => {
     return baseResponse(res, true, result.data);
 });
 
-Router.post('/:tid/setAdmin', wrapMiddleware(teamValidator.addAdmin), verifyToken, IsAdminFromParametr, async (req, res) => {
+
+Router.post('/:tid/setAdmin', wrapMiddleware(teamValidator.addAdmin), verifyTokenMiddleware, IsAdminFromParametr, async (req, res) => {
     let result = await teamApp.setUserToAdmin(req.body.userEmail, req.params.tid);
     if (!result.status) {
         if (result.statusCode === BaseAppStatusCode.NotFounded) {

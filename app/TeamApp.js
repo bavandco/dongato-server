@@ -141,7 +141,7 @@ module.exports = class {
                 }
             }, {
                 $set: {
-                    'members.$.rule': 'admin'
+                    'members.$.rule': userRules.Admin
                 }
             })
 
