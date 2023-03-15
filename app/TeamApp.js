@@ -75,7 +75,7 @@ module.exports = class {
 
             return result.matchedCount === 1 ?
                 new BaseAppResult(true, BaseAppStatusCode.Success) :
-                new BaseAppResult(false, BaseAppStatusCode)
+                new BaseAppResult(false, BaseAppStatusCode.NotFounded)
         } catch (e) {
             console.log(e);
             return new BaseAppResult(false, BaseAppStatusCode.Unknown);
@@ -135,7 +135,10 @@ module.exports = class {
 
             const result = await Team.updateOne({
                 teamID: teamID,
-                'members.user': user._id
+                'members.user': user._id,
+                owner: {
+                    $ne: user._id
+                }
             }, {
                 $set: {
                     'members.$.rule': 'admin'
@@ -144,7 +147,7 @@ module.exports = class {
 
             return result.matchedCount === 1 ?
                 new BaseAppResult(true, BaseAppStatusCode.Success) :
-                new BaseAppResult(false, BaseAppStatusCode)
+                new BaseAppResult(false, BaseAppStatusCode.NotFounded)
         } catch (e) {
             console.log(e)
             return new BaseAppResult(false, BaseAppStatusCode.Unknown);
